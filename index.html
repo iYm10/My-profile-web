@@ -1,271 +1,1066 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CityPulse AI — Smart City Decision Support Platform</title>
-<meta name="description" content="CityPulse AI turns transportation, energy, governance and waste data into clear, actionable decisions for city planners.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230B1F3A%22/><path d=%22M20 62 L38 62 L46 40 L56 78 L64 52 L72 62 L80 62%22 stroke=%22%2300D6C4%22 stroke-width=%228%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yahya Majrashi — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #16161f;
+      --border: rgba(255,255,255,0.07);
+      --accent: #4fffb0;
+      --accent2: #00bfff;
+      --accent3: #ff6f91;
+      --text: #e8e8f0;
+      --muted: #7a7a9a;
+      --heading: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,255,176,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,255,176,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 8s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 500px; height: 500px; background: rgba(79,255,176,0.06); top: -100px; right: -100px; }
+    .orb2 { width: 400px; height: 400px; background: rgba(0,191,255,0.05); bottom: 100px; left: -80px; animation-delay: -4s; }
+    .orb3 { width: 300px; height: 300px; background: rgba(255,111,145,0.04); top: 50%; left: 50%; animation-delay: -2s; }
+
+    @keyframes pulse {
+      from { transform: scale(1) translateY(0); opacity: 0.5; }
+      to   { transform: scale(1.15) translateY(-30px); opacity: 1; }
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.7);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--heading);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.0;
+      color: var(--heading);
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+    h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .tag {
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .tag.accent { border-color: rgba(79,255,176,0.3); color: var(--accent); background: rgba(79,255,176,0.06); }
+    .tag.blue { border-color: rgba(0,191,255,0.3); color: var(--accent2); background: rgba(0,191,255,0.06); }
+    .tag.pink { border-color: rgba(255,111,145,0.3); color: var(--accent3); background: rgba(255,111,145,0.06); }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0f;
+      border: 1px solid var(--accent);
+      font-weight: 600;
+    }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Avatar card */
+    .avatar-card {
+      width: 220px;
+      height: 280px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .avatar-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(79,255,176,0.08), rgba(0,191,255,0.05), transparent);
+    }
+    .avatar-initial {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      color: #0a0a0f;
+      position: relative;
+      z-index: 1;
+    }
+    .avatar-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--heading);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .avatar-gpa {
+      font-size: 11px;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.05em;
+    }
+    .avatar-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(79,255,176,0.1);
+      border: 1px solid rgba(79,255,176,0.25);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 10px;
+      color: var(--accent);
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 60px 0;
+    }
+    .stat-item {
+      background: var(--card);
+      padding: 28px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: var(--surface); }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      color: var(--heading);
+      letter-spacing: -1px;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 0; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .section-num {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--heading);
+      letter-spacing: -0.5px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .edu-card:hover { border-color: rgba(79,255,176,0.25); transform: translateY(-2px); }
+    .edu-card.featured { grid-column: 1 / -1; }
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+    }
+    .edu-card.blue::before { background: var(--accent2); }
+    .edu-year {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .edu-card.blue .edu-year { color: var(--accent2); }
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--heading);
+      margin-bottom: 4px;
+    }
+    .edu-school { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+    .edu-detail {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .edu-highlight {
+      display: inline-block;
+      background: rgba(79,255,176,0.08);
+      border: 1px solid rgba(79,255,176,0.2);
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 11px;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-meta { text-align: right; }
+    .exp-date { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+    .exp-org {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--heading);
+      margin-bottom: 14px;
+    }
+    .exp-points { list-style: none; }
+    .exp-points li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .exp-points li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .skill-group:hover { border-color: rgba(79,255,176,0.2); }
+    .skill-group-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--heading);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skill-group-title .icon { color: var(--accent); font-size: 16px; }
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-pill {
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .skill-pill:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+    /* ── CERTS ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .cert-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .cert-item:hover { border-color: rgba(79,255,176,0.2); }
+    .cert-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .cert-icon.ibm { background: rgba(0,191,255,0.1); }
+    .cert-icon.ms  { background: rgba(0,120,255,0.1); }
+    .cert-icon.sa  { background: rgba(79,255,176,0.1); }
+    .cert-name { font-size: 12px; color: var(--text); line-height: 1.4; }
+    .cert-issuer { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.05em; }
+
+    /* ── ACTIVITIES ── */
+    .act-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .act-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .act-card:hover { border-color: rgba(79,255,176,0.25); transform: translateY(-2px); }
+    .act-type {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .act-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--heading);
+      margin-bottom: 8px;
+    }
+    .act-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .act-date { font-size: 10px; color: var(--muted); margin-top: 12px; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding-bottom: 100px;
+    }
+    .contact-inner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(79,255,176,0.06) 0%, transparent 70%);
+    }
+    .contact-inner h2 {
+      font-size: 38px;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .contact-inner p {
+      color: var(--muted);
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeIn 0.7s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: none; }
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+
+    /* ── CURRENT BADGE ── */
+    .current-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,255,176,0.08);
+      border: 1px solid rgba(79,255,176,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .avatar-card { display: none; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .edu-grid { grid-template-columns: 1fr; }
+      .edu-card.featured { grid-column: auto; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .act-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      .exp-meta { text-align: left; }
+      .contact-inner { padding: 32px 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="pulse-bg" aria-hidden="true"></div>
+  <!-- ORBS -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
 
-<header class="site-header" id="top">
-  <div class="wrap header-inner">
-    <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 40 40"><path d="M4 24 L14 24 L18 12 L23 32 L27 18 L31 24 L36 24" /></svg>
-      </span>
-      <span class="brand-name">CityPulse<em>AI</em></span>
-    </a>
-
-    <nav class="nav" id="nav">
-      <a href="#modules">Modules</a>
-      <a href="#how">How it works</a>
-      <a href="#stack">Under the hood</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <div class="header-cta">
-      <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener" id="gh-link-nav">
-        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.49c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.17-.89-1.17-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-        View on GitHub
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <div class="nav-logo">YM<span>.</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certs">Certs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-  </div>
-</header>
-
-<main>
+  </nav>
 
   <!-- HERO -->
-  <section class="hero wrap" id="hero">
-    <div class="hero-copy reveal">
-      <p class="eyebrow">AI-driven smart city decision support</p>
-      <h1>One dashboard.<br>Four city systems.<br><span class="accent">One clear next step.</span></h1>
-      <p class="hero-sub">
-        CityPulse AI reads transportation, energy, governance and waste
-        signals from a city, runs each through its own trained model, and
-        turns the output into a plain-language recommendation a planner can
-        act on the same day.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#modules">Explore the modules</a>
-        <a class="btn btn-outline" href="#how">See how it works</a>
-      </div>
-      <div class="hero-tags" role="list">
-        <span role="listitem">Transportation &amp; Safety</span>
-        <span role="listitem">Energy &amp; Buildings</span>
-        <span role="listitem">Governance &amp; Digital Services</span>
-        <span role="listitem">Environment &amp; Waste</span>
-      </div>
-    </div>
-
-    <div class="hero-visual reveal" aria-hidden="true">
-      <svg class="pulse-svg" viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="skylineGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#123E5A"/>
-            <stop offset="1" stop-color="#0B1F3A"/>
-          </linearGradient>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#00A99D" stop-opacity="0"/>
-            <stop offset=".5" stop-color="#28E8D6"/>
-            <stop offset="1" stop-color="#2F6BFF" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-
-        <rect x="0" y="0" width="520" height="380" rx="28" fill="url(#skylineGrad)"/>
-
-        <!-- skyline silhouette -->
-        <g fill="#0E2A47">
-          <rect x="40"  y="230" width="34" height="120"/>
-          <rect x="84"  y="190" width="30" height="160"/>
-          <rect x="124" y="245" width="40" height="105"/>
-          <rect x="174" y="150" width="36" height="200"/>
-          <rect x="220" y="205" width="30" height="145"/>
-          <rect x="260" y="120" width="42" height="230"/>
-          <rect x="312" y="215" width="34" height="135"/>
-          <rect x="356" y="175" width="30" height="175"/>
-          <rect x="396" y="240" width="38" height="110"/>
-          <rect x="444" y="195" width="32" height="155"/>
-        </g>
-
-        <!-- windows -->
-        <g fill="#274A6B" opacity=".8" id="windows"></g>
-
-        <!-- pulse line across the skyline -->
-        <path id="pulseLine" d="M0 300 L150 300 L172 250 L192 320 L214 260 L236 300 L520 300"
-              fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle id="pulseDot" r="5" fill="#28E8D6">
-          <animateMotion dur="4.5s" repeatCount="indefinite"
-            path="M0 300 L150 300 L172 250 L192 320 L214 260 L236 300 L520 300"/>
-        </circle>
-      </svg>
-      <p class="visual-caption">Live signal → model → decision, for every district</p>
-    </div>
-  </section>
-
-  <!-- STAT STRIP -->
-  <section class="stat-strip">
-    <div class="wrap stat-grid reveal">
-      <div class="stat"><span>4</span><p>Smart-city domains covered</p></div>
-      <div class="stat"><span>1</span><p>Unified decision dashboard</p></div>
-      <div class="stat"><span>N</span><p>Independent model per domain</p></div>
-      <div class="stat"><span>24/7</span><p>Ready for planning cycles</p></div>
-    </div>
-  </section>
-
-  <!-- MODULES -->
-  <section class="section" id="modules">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">The four domains</p>
-        <h2>Every city system, read on its own terms</h2>
-        <p class="section-sub">Each module is trained on the data that domain actually produces,
-          then normalized into the same executive format: forecast, priority, action.</p>
-      </div>
-
-      <div class="module-grid">
-        <article class="module-card reveal">
-          <span class="module-icon" style="--tint:#2F6BFF">
-            <svg viewBox="0 0 24 24"><path d="M4 16h1l1.2-4.8A2 2 0 0 1 8.1 9.7h7.8a2 2 0 0 1 1.9 1.5L19 16h1M4 16v3a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h10v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-3M4 16h16M7 13.5h.01M17 13.5h.01"/></svg>
-          </span>
-          <h3>Transportation &amp; Safety</h3>
-          <p>Forecasts congestion and incident risk by district, so traffic
-            and safety teams know where to route attention before it becomes
-            a problem.</p>
-          <span class="module-tag">Model output → risk level + hotspot list</span>
-        </article>
-
-        <article class="module-card reveal">
-          <span class="module-icon" style="--tint:#B4670A">
-            <svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
-          </span>
-          <h3>Energy &amp; Buildings</h3>
-          <p>Predicts load and consumption patterns across the grid and
-            municipal buildings to support capacity planning and efficiency
-            programs.</p>
-          <span class="module-tag">Model output → demand curve + alerts</span>
-        </article>
-
-        <article class="module-card reveal">
-          <span class="module-icon" style="--tint:#00A99D">
-            <svg viewBox="0 0 24 24"><path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6h6v6M4 10h16"/></svg>
-          </span>
-          <h3>Governance &amp; Digital Services</h3>
-          <p>Tracks service-request volume and response quality across
-            departments, surfacing where digital services need attention
-            first.</p>
-          <span class="module-tag">Model output → service score + priority</span>
-        </article>
-
-        <article class="module-card reveal">
-          <span class="module-icon" style="--tint:#168C65">
-            <svg viewBox="0 0 24 24"><path d="M7 3 3 7l4 4M3 7h13a4 4 0 0 1 4 4v1M17 21l4-4-4-4M21 17H8a4 4 0 0 1-4-4v-1"/></svg>
-          </span>
-          <h3>Environment &amp; Waste</h3>
-          <p>Forecasts monthly collection volume by borough and district,
-            turning tonnage trends into a clear planning outlook and next
-            action.</p>
-          <span class="module-tag">Model output → volume forecast + plan</span>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section alt" id="how">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">From raw signal to decision</p>
-        <h2>How a single forecast gets made</h2>
-      </div>
-
-      <div class="steps">
-        <div class="step reveal">
-          <span class="step-no">01</span>
-          <h3>Collect &amp; profile</h3>
-          <p>The city profile (population, districts, strategic goals) and
-            domain history set the context every model reads against.</p>
+  <section id="about">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="current-badge fade-in">
+            <span class="dot"></span>
+            Currently at Tuwaiq Academy · Data Science & AI Diploma
+          </div>
+          <div class="hero-label fade-in delay-1">IT Graduate · Saudi Arabia</div>
+          <h1 class="fade-in delay-2">Yahya<br /><em>Majrashi</em></h1>
+          <p class="hero-sub fade-in delay-3">
+            Information Technology graduate passionate about Artificial Intelligence,
+            IoT, and Cybersecurity. Building smart systems and digital transformation
+            solutions that make a difference.
+          </p>
+          <div class="hero-tags fade-in delay-3">
+            <span class="tag accent">AI & Data Science</span>
+            <span class="tag blue">Cybersecurity</span>
+            <span class="tag pink">IoT Systems</span>
+            <span class="tag">Web Development</span>
+            <span class="tag">Digital Transformation</span>
+          </div>
+          <div class="hero-cta fade-in delay-4">
+            <a class="btn btn-primary" href="#contact">Get In Touch →</a>
+            <a class="btn btn-outline" href="#education">View Background</a>
+          </div>
         </div>
-        <div class="step reveal">
-          <span class="step-no">02</span>
-          <h3>Run the domain model</h3>
-          <p>A model trained specifically for that domain — transportation,
-            energy, governance or waste — produces a forecast and a
-            confidence signal.</p>
+        <div class="avatar-card fade-in delay-5">
+          <div class="avatar-initial">YM</div>
+          <div class="avatar-name">Yahya Majrashi</div>
+          <div class="avatar-gpa">CGPA 4.84 / 5.00</div>
+          <div class="avatar-badge">🏆 1st Rank · IT Dept.</div>
         </div>
-        <div class="step reveal">
-          <span class="step-no">03</span>
-          <h3>Translate to a decision</h3>
-          <p>The forecast is converted into a headline, a priority level and
-            2–3 concrete actions a planner can hand to their team.</p>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row fade-in">
+        <div class="stat-item">
+          <div class="stat-num">4.84<span>/5</span></div>
+          <div class="stat-label">CGPA</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">15<span>+</span></div>
+          <div class="stat-label">Certifications</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">140<span>+</span></div>
+          <div class="stat-label">Volunteer Hours</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">1<span>st</span></div>
+          <div class="stat-label">Dept. Rank</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STACK -->
-  <section class="section" id="stack">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Under the hood</p>
-        <h2>Built as an interactive dashboard, not a slideshow</h2>
-        <p class="section-sub">The full experience — profile setup, live
-          forecasts, an AI advisor and downloadable reports — runs as a
-          Streamlit application backed by per-domain ML models.</p>
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Education</h2>
+        <div class="section-line"></div>
       </div>
 
-      <div class="stack-grid reveal">
-        <div class="stack-item">
-          <h4>Interactive dashboard</h4>
-          <p>Streamlit + Plotly power the live forecast views, KPI cards and
-            the AI advisor chat.</p>
+      <div class="edu-grid">
+        <!-- Current -->
+        <div class="edu-card featured">
+          <div class="edu-year">2025 – Present · CURRENT</div>
+          <div class="edu-degree">Diploma in Data Science & Artificial Intelligence</div>
+          <div class="edu-school">Tuwaiq Academy, Saudi Arabia</div>
+          <div class="edu-detail">Intensive program covering machine learning, data analysis, deep learning, and AI applications. Hands-on training with industry-grade tools and real-world datasets.</div>
+          <span class="edu-highlight">⚡ Currently Enrolled</span>
         </div>
-        <div class="stack-item">
-          <h4>Independent ML models</h4>
-          <p>Each domain ships its own trained model bundle, so a change in
-            one domain never touches another.</p>
-        </div>
-        <div class="stack-item">
-          <h4>Executive reporting</h4>
-          <p>Every completed assessment can be exported as a stakeholder-
-            ready report in one click.</p>
-        </div>
-      </div>
 
-      <div class="stack-cta reveal">
-        <p>This page is the project's front door. The working app and model
-          code live in the repository below.</p>
-        <a class="btn btn-primary" href="https://github.com/" target="_blank" rel="noopener" id="gh-link-cta">Open the GitHub repository</a>
+        <!-- JU -->
+        <div class="edu-card">
+          <div class="edu-year">2021 – 2026</div>
+          <div class="edu-degree">BSc in Information Technology</div>
+          <div class="edu-school">Jazan University · Jazan, Saudi Arabia</div>
+          <div class="edu-detail">
+            First Class Honor · CGPA 4.84/5.00 · 1st Rank in IT Department.<br /><br />
+            Graduation Project: <strong style="color:var(--text)">"StuGuide"</strong> — a comprehensive web-based platform for enhancing student academic experience. Phase 1 & 2: A+ Grade.
+          </div>
+          <span class="edu-highlight">🏆 First Class Honor</span>
+        </div>
+
+        <!-- English -->
+        <div class="edu-card blue">
+          <div class="edu-year">Jul 2022 · 24 Weeks</div>
+          <div class="edu-degree">Intensive English Language Program</div>
+          <div class="edu-school">IEC at University of Colorado Boulder, USA</div>
+          <div class="edu-detail">Completed a full intensive English program in the United States, building strong communication and academic language skills in an international environment.</div>
+        </div>
       </div>
     </div>
   </section>
 
-</main>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Experience</h2>
+        <div class="section-line"></div>
+      </div>
 
-<footer class="site-footer" id="contact">
-  <div class="wrap footer-inner">
-    <div>
-      <span class="brand-name small">CityPulse<em>AI</em></span>
-      <p>An AI-driven decision-support platform for city planners.</p>
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jun 2024 – Jul 2024</div>
+          <div class="exp-org">Al Hurrath General Hospital</div>
+        </div>
+        <div>
+          <div class="exp-role">IT Trainee Intern</div>
+          <ul class="exp-points">
+            <li>Hands-on experience in healthcare IT support, resolving technical issues for the VIDA EMR platform.</li>
+            <li>Performed system troubleshooting, network repair, and software configuration for seamless hospital operations.</li>
+            <li>Played a key role in cybersecurity incident response by resolving the global CrowdStrike outage on-site.</li>
+            <li>Developed technical skills in hardware maintenance, network devices, and telemedicine setup.</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="#modules">Modules</a>
-      <a href="#how">How it works</a>
-      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </div>
-  <p class="footer-note">© <span id="year"></span> CityPulse AI. Built for planning support, not automated decisions — outputs should be reviewed with local data.</p>
-</footer>
+  </section>
 
-<script src="assets/js/main.js"></script>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Skills</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">⟨/⟩</span> Programming & Dev</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">Web Development</span>
+            <span class="skill-pill">HTML/CSS</span>
+            <span class="skill-pill">IoT Systems</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">🛡</span> Cybersecurity</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Secure Networking</span>
+            <span class="skill-pill">Incident Response</span>
+            <span class="skill-pill">Cybersecurity Fundamentals</span>
+            <span class="skill-pill">Privacy & Compliance</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">🤖</span> AI & Data</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Generative AI</span>
+            <span class="skill-pill">Prompt Engineering</span>
+            <span class="skill-pill">Data Science</span>
+            <span class="skill-pill">Machine Learning</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">🖥</span> IT Support</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Technical Troubleshooting</span>
+            <span class="skill-pill">Hardware Maintenance</span>
+            <span class="skill-pill">Microsoft 365</span>
+            <span class="skill-pill">EMR Systems</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">📋</span> Management</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Digital Project Management</span>
+            <span class="skill-pill">Digital Media</span>
+            <span class="skill-pill">Creative Consultancy</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><span class="icon">🤝</span> Soft Skills</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Team Leadership</span>
+            <span class="skill-pill">Problem Solving</span>
+            <span class="skill-pill">Communication</span>
+            <span class="skill-pill">Creative Thinking</span>
+            <span class="skill-pill">Time Management</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Certifications</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="certs-grid">
+        <div class="cert-item">
+          <div class="cert-icon ibm">🔵</div>
+          <div>
+            <div class="cert-name">Generative AI for Cybersecurity Professionals Specialization</div>
+            <div class="cert-issuer">IBM · Aug 2024</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon ms">🟦</div>
+          <div>
+            <div class="cert-name">Microsoft IT Support Specialist</div>
+            <div class="cert-issuer">Microsoft · Sep 2024</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon ibm">🔵</div>
+          <div>
+            <div class="cert-name">Cybersecurity Fundamentals</div>
+            <div class="cert-issuer">IBM · Jun 2024</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon sa">🟢</div>
+          <div>
+            <div class="cert-name">AI Concepts and Advanced Applications</div>
+            <div class="cert-issuer">SDAIA · Sep 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon sa">🟢</div>
+          <div>
+            <div class="cert-name">Fundamentals of Artificial Intelligence</div>
+            <div class="cert-issuer">Sep 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon ibm">🔵</div>
+          <div>
+            <div class="cert-name">Generative AI: Prompt Engineering Basics</div>
+            <div class="cert-issuer">IBM · Aug 2024</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon ms">🟦</div>
+          <div>
+            <div class="cert-name">The Microsoft 365 Ecosystem</div>
+            <div class="cert-issuer">Microsoft · Sep 2024</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon ibm">🔵</div>
+          <div>
+            <div class="cert-name">Introduction to Secure Networking</div>
+            <div class="cert-issuer">Aug 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITIES -->
+  <section id="activities">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Activities & Volunteering</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="act-grid">
+        <div class="act-card">
+          <div class="act-type">Club · Jul 2023 – Dec 2025</div>
+          <div class="act-title">Computer & Cyber Security Club, JU</div>
+          <div class="act-desc">Member of the Organize & Management of Events Team. Planning and executing cybersecurity events, workshops, and educational programs for university students.</div>
+        </div>
+        <div class="act-card">
+          <div class="act-type">Club · Oct 2024 – Dec 2025</div>
+          <div class="act-title">Google Developer Student Clubs, JU</div>
+          <div class="act-desc">Member of the Developing & Training team. Contributing to technical training programs and development initiatives in a hybrid work environment.</div>
+        </div>
+        <div class="act-card">
+          <div class="act-type">Club · Sep 2024 – Oct 2024</div>
+          <div class="act-title">Cyber Security Club, KSU</div>
+          <div class="act-desc">Member of the Technology Committee in Riyadh, supporting cybersecurity awareness programs and technology-focused initiatives at King Saud University.</div>
+        </div>
+        <div class="act-card">
+          <div class="act-type">🏆 Award</div>
+          <div class="act-title">Jazan University Excellence Award — 1st Place</div>
+          <div class="act-desc">Received the Jazan University Award for Excellence, ranking 1st in the academic year 2022–2023 within the Information Technology Department.</div>
+        </div>
+        <div class="act-card">
+          <div class="act-type">Volunteer · Oct 2025 · 100 Hours</div>
+          <div class="act-title">University Volunteer Club, Abha</div>
+          <div class="act-desc">Completed 100 volunteer hours contributing to community service and outreach programs in Abha over three weeks in October 2025.</div>
+        </div>
+        <div class="act-card">
+          <div class="act-type">Volunteer · Sep 2025 · 40 Hours</div>
+          <div class="act-title">Voluntary Work Association, Hail</div>
+          <div class="act-desc">Participated in community service with the Voluntary Work and Community Service Association, contributing 40 hours in Hail.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Contact</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="contact-inner">
+        <h2>Let's Connect</h2>
+        <p>Open to opportunities in AI, Data Science, Cybersecurity, and IT roles.</p>
+        <div class="contact-links">
+          <a class="contact-item" href="mailto:zyly327@gmail.com">
+            <span>✉</span> zyly327@gmail.com
+          </a>
+          <a class="contact-item" href="tel:+966554217082">
+            <span>📞</span> +966 55 421 7082
+          </a>
+          <a class="contact-item" href="https://www.linkedin.com/in/yahya-majrashi" target="_blank">
+            <span>🔗</span> LinkedIn Profile
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Yahya Majrashi · Information Technology Graduate · Saudi Arabia · 2026
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'none';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.edu-card, .exp-item, .skill-group, .cert-item, .act-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
