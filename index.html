@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CityPulse AI — Smart City Decision Support Platform</title>
+<meta name="description" content="CityPulse AI turns transportation, energy, governance and waste data into clear, actionable decisions for city planners.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230B1F3A%22/><path d=%22M20 62 L38 62 L46 40 L56 78 L64 52 L72 62 L80 62%22 stroke=%22%2300D6C4%22 stroke-width=%228%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="pulse-bg" aria-hidden="true"></div>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M4 24 L14 24 L18 12 L23 32 L27 18 L31 24 L36 24" /></svg>
+      </span>
+      <span class="brand-name">CityPulse<em>AI</em></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#modules">Modules</a>
+      <a href="#how">How it works</a>
+      <a href="#stack">Under the hood</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener" id="gh-link-nav">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.49c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.17-.89-1.17-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        View on GitHub
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap" id="hero">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">AI-driven smart city decision support</p>
+      <h1>One dashboard.<br>Four city systems.<br><span class="accent">One clear next step.</span></h1>
+      <p class="hero-sub">
+        CityPulse AI reads transportation, energy, governance and waste
+        signals from a city, runs each through its own trained model, and
+        turns the output into a plain-language recommendation a planner can
+        act on the same day.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#modules">Explore the modules</a>
+        <a class="btn btn-outline" href="#how">See how it works</a>
+      </div>
+      <div class="hero-tags" role="list">
+        <span role="listitem">Transportation &amp; Safety</span>
+        <span role="listitem">Energy &amp; Buildings</span>
+        <span role="listitem">Governance &amp; Digital Services</span>
+        <span role="listitem">Environment &amp; Waste</span>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal" aria-hidden="true">
+      <svg class="pulse-svg" viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="skylineGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#123E5A"/>
+            <stop offset="1" stop-color="#0B1F3A"/>
+          </linearGradient>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#00A99D" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#28E8D6"/>
+            <stop offset="1" stop-color="#2F6BFF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="520" height="380" rx="28" fill="url(#skylineGrad)"/>
+
+        <!-- skyline silhouette -->
+        <g fill="#0E2A47">
+          <rect x="40"  y="230" width="34" height="120"/>
+          <rect x="84"  y="190" width="30" height="160"/>
+          <rect x="124" y="245" width="40" height="105"/>
+          <rect x="174" y="150" width="36" height="200"/>
+          <rect x="220" y="205" width="30" height="145"/>
+          <rect x="260" y="120" width="42" height="230"/>
+          <rect x="312" y="215" width="34" height="135"/>
+          <rect x="356" y="175" width="30" height="175"/>
+          <rect x="396" y="240" width="38" height="110"/>
+          <rect x="444" y="195" width="32" height="155"/>
+        </g>
+
+        <!-- windows -->
+        <g fill="#274A6B" opacity=".8" id="windows"></g>
+
+        <!-- pulse line across the skyline -->
+        <path id="pulseLine" d="M0 300 L150 300 L172 250 L192 320 L214 260 L236 300 L520 300"
+              fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle id="pulseDot" r="5" fill="#28E8D6">
+          <animateMotion dur="4.5s" repeatCount="indefinite"
+            path="M0 300 L150 300 L172 250 L192 320 L214 260 L236 300 L520 300"/>
+        </circle>
+      </svg>
+      <p class="visual-caption">Live signal → model → decision, for every district</p>
+    </div>
+  </section>
+
+  <!-- STAT STRIP -->
+  <section class="stat-strip">
+    <div class="wrap stat-grid reveal">
+      <div class="stat"><span>4</span><p>Smart-city domains covered</p></div>
+      <div class="stat"><span>1</span><p>Unified decision dashboard</p></div>
+      <div class="stat"><span>N</span><p>Independent model per domain</p></div>
+      <div class="stat"><span>24/7</span><p>Ready for planning cycles</p></div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="section" id="modules">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The four domains</p>
+        <h2>Every city system, read on its own terms</h2>
+        <p class="section-sub">Each module is trained on the data that domain actually produces,
+          then normalized into the same executive format: forecast, priority, action.</p>
+      </div>
+
+      <div class="module-grid">
+        <article class="module-card reveal">
+          <span class="module-icon" style="--tint:#2F6BFF">
+            <svg viewBox="0 0 24 24"><path d="M4 16h1l1.2-4.8A2 2 0 0 1 8.1 9.7h7.8a2 2 0 0 1 1.9 1.5L19 16h1M4 16v3a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h10v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-3M4 16h16M7 13.5h.01M17 13.5h.01"/></svg>
+          </span>
+          <h3>Transportation &amp; Safety</h3>
+          <p>Forecasts congestion and incident risk by district, so traffic
+            and safety teams know where to route attention before it becomes
+            a problem.</p>
+          <span class="module-tag">Model output → risk level + hotspot list</span>
+        </article>
+
+        <article class="module-card reveal">
+          <span class="module-icon" style="--tint:#B4670A">
+            <svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+          </span>
+          <h3>Energy &amp; Buildings</h3>
+          <p>Predicts load and consumption patterns across the grid and
+            municipal buildings to support capacity planning and efficiency
+            programs.</p>
+          <span class="module-tag">Model output → demand curve + alerts</span>
+        </article>
+
+        <article class="module-card reveal">
+          <span class="module-icon" style="--tint:#00A99D">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6h6v6M4 10h16"/></svg>
+          </span>
+          <h3>Governance &amp; Digital Services</h3>
+          <p>Tracks service-request volume and response quality across
+            departments, surfacing where digital services need attention
+            first.</p>
+          <span class="module-tag">Model output → service score + priority</span>
+        </article>
+
+        <article class="module-card reveal">
+          <span class="module-icon" style="--tint:#168C65">
+            <svg viewBox="0 0 24 24"><path d="M7 3 3 7l4 4M3 7h13a4 4 0 0 1 4 4v1M17 21l4-4-4-4M21 17H8a4 4 0 0 1-4-4v-1"/></svg>
+          </span>
+          <h3>Environment &amp; Waste</h3>
+          <p>Forecasts monthly collection volume by borough and district,
+            turning tonnage trends into a clear planning outlook and next
+            action.</p>
+          <span class="module-tag">Model output → volume forecast + plan</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section alt" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">From raw signal to decision</p>
+        <h2>How a single forecast gets made</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <span class="step-no">01</span>
+          <h3>Collect &amp; profile</h3>
+          <p>The city profile (population, districts, strategic goals) and
+            domain history set the context every model reads against.</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-no">02</span>
+          <h3>Run the domain model</h3>
+          <p>A model trained specifically for that domain — transportation,
+            energy, governance or waste — produces a forecast and a
+            confidence signal.</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-no">03</span>
+          <h3>Translate to a decision</h3>
+          <p>The forecast is converted into a headline, a priority level and
+            2–3 concrete actions a planner can hand to their team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Under the hood</p>
+        <h2>Built as an interactive dashboard, not a slideshow</h2>
+        <p class="section-sub">The full experience — profile setup, live
+          forecasts, an AI advisor and downloadable reports — runs as a
+          Streamlit application backed by per-domain ML models.</p>
+      </div>
+
+      <div class="stack-grid reveal">
+        <div class="stack-item">
+          <h4>Interactive dashboard</h4>
+          <p>Streamlit + Plotly power the live forecast views, KPI cards and
+            the AI advisor chat.</p>
+        </div>
+        <div class="stack-item">
+          <h4>Independent ML models</h4>
+          <p>Each domain ships its own trained model bundle, so a change in
+            one domain never touches another.</p>
+        </div>
+        <div class="stack-item">
+          <h4>Executive reporting</h4>
+          <p>Every completed assessment can be exported as a stakeholder-
+            ready report in one click.</p>
+        </div>
+      </div>
+
+      <div class="stack-cta reveal">
+        <p>This page is the project's front door. The working app and model
+          code live in the repository below.</p>
+        <a class="btn btn-primary" href="https://github.com/" target="_blank" rel="noopener" id="gh-link-cta">Open the GitHub repository</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="brand-name small">CityPulse<em>AI</em></span>
+      <p>An AI-driven decision-support platform for city planners.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#modules">Modules</a>
+      <a href="#how">How it works</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+  <p class="footer-note">© <span id="year"></span> CityPulse AI. Built for planning support, not automated decisions — outputs should be reviewed with local data.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
