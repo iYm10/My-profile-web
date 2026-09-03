@@ -1,1066 +1,1293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yahya Majrashi — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0a0a0f;
-      --surface: #12121a;
-      --card: #16161f;
-      --border: rgba(255,255,255,0.07);
-      --accent: #4fffb0;
-      --accent2: #00bfff;
-      --accent3: #ff6f91;
-      --text: #e8e8f0;
-      --muted: #7a7a9a;
-      --heading: #ffffff;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ── GRID BACKGROUND ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(79,255,176,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,255,176,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── GLOW ORBS ── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-      animation: pulse 8s ease-in-out infinite alternate;
-    }
-    .orb1 { width: 500px; height: 500px; background: rgba(79,255,176,0.06); top: -100px; right: -100px; }
-    .orb2 { width: 400px; height: 400px; background: rgba(0,191,255,0.05); bottom: 100px; left: -80px; animation-delay: -4s; }
-    .orb3 { width: 300px; height: 300px; background: rgba(255,111,145,0.04); top: 50%; left: 50%; animation-delay: -2s; }
-
-    @keyframes pulse {
-      from { transform: scale(1) translateY(0); opacity: 0.5; }
-      to   { transform: scale(1.15) translateY(-30px); opacity: 1; }
-    }
-
-    /* ── LAYOUT ── */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 18px 0;
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      background: rgba(10,10,15,0.7);
-    }
-    nav .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--heading);
-      letter-spacing: -0.5px;
-    }
-    .nav-logo span { color: var(--accent); }
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 80px;
-    }
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 60px;
-      align-items: center;
-      width: 100%;
-    }
-    .hero-label {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-label::before {
-      content: '';
-      display: inline-block;
-      width: 32px;
-      height: 1px;
-      background: var(--accent);
-    }
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(42px, 6vw, 72px);
-      line-height: 1.0;
-      color: var(--heading);
-      letter-spacing: -2px;
-      margin-bottom: 16px;
-    }
-    h1 em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      color: var(--accent);
-      font-weight: 400;
-    }
-    .hero-sub {
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 500px;
-      line-height: 1.8;
-      margin-bottom: 36px;
-    }
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 40px;
-    }
-    .tag {
-      padding: 5px 14px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      font-size: 11px;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-    .tag:hover { border-color: var(--accent); color: var(--accent); }
-    .tag.accent { border-color: rgba(79,255,176,0.3); color: var(--accent); background: rgba(79,255,176,0.06); }
-    .tag.blue { border-color: rgba(0,191,255,0.3); color: var(--accent2); background: rgba(0,191,255,0.06); }
-    .tag.pink { border-color: rgba(255,111,145,0.3); color: var(--accent3); background: rgba(255,111,145,0.06); }
-
-    .hero-cta {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 12px 28px;
-      border-radius: 4px;
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #0a0a0f;
-      border: 1px solid var(--accent);
-      font-weight: 600;
-    }
-    .btn-primary:hover { background: transparent; color: var(--accent); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* Avatar card */
-    .avatar-card {
-      width: 220px;
-      height: 280px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--card);
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-    .avatar-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(79,255,176,0.08), rgba(0,191,255,0.05), transparent);
-    }
-    .avatar-initial {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 32px;
-      color: #0a0a0f;
-      position: relative;
-      z-index: 1;
-    }
-    .avatar-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--heading);
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-    .avatar-gpa {
-      font-size: 11px;
-      color: var(--accent);
-      position: relative;
-      z-index: 1;
-      letter-spacing: 0.05em;
-    }
-    .avatar-badge {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(79,255,176,0.1);
-      border: 1px solid rgba(79,255,176,0.25);
-      border-radius: 100px;
-      padding: 4px 12px;
-      font-size: 10px;
-      color: var(--accent);
-      white-space: nowrap;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── STATS ROW ── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 60px 0;
-    }
-    .stat-item {
-      background: var(--card);
-      padding: 28px 24px;
-      text-align: center;
-      transition: background 0.2s;
-    }
-    .stat-item:hover { background: var(--surface); }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 32px;
-      color: var(--heading);
-      letter-spacing: -1px;
-    }
-    .stat-num span { color: var(--accent); }
-    .stat-label {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    /* ── SECTIONS ── */
-    section { padding: 80px 0; }
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 48px;
-    }
-    .section-num {
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-    }
-    h2 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 28px;
-      color: var(--heading);
-      letter-spacing: -0.5px;
-    }
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── EDUCATION ── */
-    .edu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .edu-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 28px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .edu-card:hover { border-color: rgba(79,255,176,0.25); transform: translateY(-2px); }
-    .edu-card.featured { grid-column: 1 / -1; }
-    .edu-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--accent);
-    }
-    .edu-card.blue::before { background: var(--accent2); }
-    .edu-year {
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 8px;
-    }
-    .edu-card.blue .edu-year { color: var(--accent2); }
-    .edu-degree {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--heading);
-      margin-bottom: 4px;
-    }
-    .edu-school { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
-    .edu-detail {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .edu-highlight {
-      display: inline-block;
-      background: rgba(79,255,176,0.08);
-      border: 1px solid rgba(79,255,176,0.2);
-      border-radius: 4px;
-      padding: 3px 10px;
-      font-size: 11px;
-      color: var(--accent);
-      margin-top: 10px;
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 32px;
-      padding: 32px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .exp-item:last-child { border-bottom: none; }
-    .exp-meta { text-align: right; }
-    .exp-date { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
-    .exp-org {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--accent);
-      margin-top: 4px;
-    }
-    .exp-role {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 17px;
-      color: var(--heading);
-      margin-bottom: 14px;
-    }
-    .exp-points { list-style: none; }
-    .exp-points li {
-      font-size: 13px;
-      color: var(--muted);
-      padding-left: 18px;
-      position: relative;
-      margin-bottom: 8px;
-      line-height: 1.6;
-    }
-    .exp-points li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .skill-group {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      transition: border-color 0.2s;
-    }
-    .skill-group:hover { border-color: rgba(79,255,176,0.2); }
-    .skill-group-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--heading);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .skill-group-title .icon { color: var(--accent); font-size: 16px; }
-    .skill-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .skill-pill {
-      padding: 4px 10px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 11px;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-    .skill-pill:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-
-    /* ── CERTS ── */
-    .certs-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .cert-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      transition: border-color 0.2s;
-    }
-    .cert-item:hover { border-color: rgba(79,255,176,0.2); }
-    .cert-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .cert-icon.ibm { background: rgba(0,191,255,0.1); }
-    .cert-icon.ms  { background: rgba(0,120,255,0.1); }
-    .cert-icon.sa  { background: rgba(79,255,176,0.1); }
-    .cert-name { font-size: 12px; color: var(--text); line-height: 1.4; }
-    .cert-issuer { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.05em; }
-
-    /* ── ACTIVITIES ── */
-    .act-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .act-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .act-card:hover { border-color: rgba(79,255,176,0.25); transform: translateY(-2px); }
-    .act-type {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .act-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--heading);
-      margin-bottom: 8px;
-    }
-    .act-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
-    .act-date { font-size: 10px; color: var(--muted); margin-top: 12px; }
-
-    /* ── CONTACT ── */
-    #contact {
-      padding-bottom: 100px;
-    }
-    .contact-inner {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 56px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact-inner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(79,255,176,0.06) 0%, transparent 70%);
-    }
-    .contact-inner h2 {
-      font-size: 38px;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .contact-inner p {
-      color: var(--muted);
-      margin-bottom: 36px;
-      position: relative;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      position: relative;
-    }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 12px;
-      transition: all 0.2s;
-    }
-    .contact-item:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      text-align: center;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* ── ANIMATIONS ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      animation: fadeIn 0.7s ease forwards;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: none; }
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-    .delay-5 { animation-delay: 0.5s; }
-
-    /* ── CURRENT BADGE ── */
-    .current-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(79,255,176,0.08);
-      border: 1px solid rgba(79,255,176,0.3);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      margin-bottom: 24px;
-    }
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: blink 1.4s ease-in-out infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.2; }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .avatar-card { display: none; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .edu-grid { grid-template-columns: 1fr; }
-      .edu-card.featured { grid-column: auto; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .certs-grid { grid-template-columns: 1fr; }
-      .act-grid { grid-template-columns: 1fr; }
-      .exp-item { grid-template-columns: 1fr; gap: 8px; }
-      .exp-meta { text-align: left; }
-      .contact-inner { padding: 32px 24px; }
-      .nav-links { display: none; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Yahya Majrashi — AI & Data Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#03030a;
+  --bg2:#07071a;
+  --panel:#0c0c20;
+  --card:#10102a;
+  --card2:#141432;
+  --border:rgba(120,80,255,.12);
+  --border2:rgba(120,80,255,.22);
+  --border3:rgba(255,255,255,.06);
+  --a1:#7b5fff;
+  --a2:#00d4ff;
+  --a3:#ff6b9d;
+  --a4:#00ff88;
+  --a5:#ffb347;
+  --txt:#d4d4f0;
+  --txt2:#8888aa;
+  --txt3:#5555775;
+  --white:#fff;
+  --r:16px;
+  --r2:24px;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--a1) var(--bg)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--a1);border-radius:4px}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:15px;line-height:1.75;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* ─── CUSTOM CURSOR ─── */
+#cur{
+  position:fixed;z-index:9999;pointer-events:none;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--a1);
+  box-shadow:0 0 20px var(--a1),0 0 40px rgba(123,95,255,.4);
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .2s;
+}
+#cur.expand{width:48px;height:48px;background:transparent;border:1px solid var(--a1);mix-blend-mode:normal}
+#cur-trail{
+  position:fixed;z-index:9998;pointer-events:none;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(123,95,255,.3);
+  transform:translate(-50%,-50%);
+  transition:all .12s ease;
+}
+/* ─── CANVAS BG ─── */
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.7}
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:70px;
+  background:rgba(3,3,10,.75);
+  backdrop-filter:blur(28px) saturate(160%);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:20px;
+  background:linear-gradient(135deg,#a78bfa,#60c8ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:-.5px;
+}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links a{
+  color:var(--txt2);text-decoration:none;
+  font-size:13px;font-weight:500;
+  padding:6px 16px;border-radius:100px;
+  transition:all .2s;
+}
+.nav-links a:hover{color:var(--white);background:rgba(123,95,255,.15)}
+.nav-btn{
+  padding:8px 22px;border-radius:100px;
+  background:linear-gradient(135deg,var(--a1),var(--a2));
+  color:#fff;font-size:13px;font-weight:700;
+  text-decoration:none;letter-spacing:.02em;
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 4px 20px rgba(123,95,255,.35);
+}
+.nav-btn:hover{opacity:.85;transform:translateY(-1px)}
+/* ─── SECTIONS ─── */
+section{padding:110px 0;position:relative;z-index:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding-top:70px;position:relative;overflow:hidden;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 440px;
+  gap:80px;align-items:center;
+}
+/* Status pill */
+.status-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 20px;border-radius:100px;
+  background:rgba(0,212,255,.08);
+  border:1px solid rgba(0,212,255,.25);
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--a2);
+  margin-bottom:32px;
+}
+.pulse{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--a4);
+  box-shadow:0 0 8px var(--a4);
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+/* Heading */
+.hero-h{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(52px,6vw,88px);
+  font-weight:900;line-height:.9;
+  letter-spacing:-3px;color:var(--white);
+  margin-bottom:12px;
+}
+.hero-h .name{
+  display:block;
+  background:linear-gradient(135deg,#c4b5fd 0%,#93c5fd 40%,#6ee7b7 80%,#fde68a 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;background-size:200%;
+  animation:gradShift 6s ease infinite;
+}
+@keyframes gradShift{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+/* Typewriter */
+.tw-wrap{
+  font-family:'Fira Code',monospace;
+  font-size:18px;font-weight:400;
+  color:var(--a2);margin:24px 0 20px;
+  min-height:28px;
+}
+.tw-wrap .prompt{color:var(--txt2)}
+#typewriter::after{
+  content:'|';animation:blink .75s step-end infinite;color:var(--a1);
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+/* Hero description */
+.hero-desc{
+  font-size:16px;color:var(--txt2);line-height:1.85;
+  max-width:530px;margin-bottom:44px;
+}
+.hero-desc strong{color:var(--txt);font-weight:600}
+/* Domain chips */
+.domains{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px}
+.dom{
+  padding:7px 18px;border-radius:100px;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  border:1px solid;transition:all .25s;cursor:default;
+}
+.dom:hover{transform:translateY(-3px)}
+.dom-ai{color:#c4b5fd;border-color:rgba(196,181,253,.3);background:rgba(196,181,253,.06)}
+.dom-ai:hover{background:rgba(196,181,253,.15);box-shadow:0 8px 24px rgba(196,181,253,.15)}
+.dom-ds{color:#93c5fd;border-color:rgba(147,197,253,.3);background:rgba(147,197,253,.06)}
+.dom-ds:hover{background:rgba(147,197,253,.15);box-shadow:0 8px 24px rgba(147,197,253,.15)}
+.dom-ml{color:#6ee7b7;border-color:rgba(110,231,183,.3);background:rgba(110,231,183,.06)}
+.dom-ml:hover{background:rgba(110,231,183,.15);box-shadow:0 8px 24px rgba(110,231,183,.15)}
+.dom-dl{color:#fca5a5;border-color:rgba(252,165,165,.3);background:rgba(252,165,165,.06)}
+.dom-dl:hover{background:rgba(252,165,165,.15);box-shadow:0 8px 24px rgba(252,165,165,.15)}
+.dom-nlp{color:#fde68a;border-color:rgba(253,230,138,.3);background:rgba(253,230,138,.06)}
+.dom-nlp:hover{background:rgba(253,230,138,.15);box-shadow:0 8px 24px rgba(253,230,138,.15)}
+.dom-cv{color:#f9a8d4;border-color:rgba(249,168,212,.3);background:rgba(249,168,212,.06)}
+.dom-cv:hover{background:rgba(249,168,212,.15)}
+/* CTA */
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+.btn-grad{
+  padding:14px 34px;border-radius:14px;
+  background:linear-gradient(135deg,#7b5fff,#00d4ff);
+  color:#fff;font-weight:800;font-size:14px;
+  text-decoration:none;letter-spacing:.03em;
+  box-shadow:0 8px 32px rgba(123,95,255,.4);
+  transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-grad:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(123,95,255,.55)}
+.btn-outline{
+  padding:14px 34px;border-radius:14px;
+  border:1px solid var(--border2);background:rgba(123,95,255,.05);
+  color:var(--txt);font-weight:600;font-size:14px;
+  text-decoration:none;letter-spacing:.02em;
+  transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{border-color:var(--a1);color:var(--a1);background:rgba(123,95,255,.1);transform:translateY(-2px)}
+/* ─── HERO PROFILE CARD ─── */
+.profile-card{
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  border:1px solid var(--border2);
+  border-radius:var(--r2);padding:36px 28px;
+  position:relative;overflow:hidden;
+}
+.profile-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(123,95,255,.7),rgba(0,212,255,.5),transparent);
+}
+.profile-card::after{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,95,255,.12),transparent 70%);
+  top:-60px;right:-60px;
+}
+.pc-avatar{
+  width:76px;height:76px;border-radius:50%;
+  background:linear-gradient(135deg,#7b5fff,#00d4ff,#00ff88);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-size:26px;font-weight:900;
+  color:#fff;margin-bottom:18px;
+  box-shadow:0 0 0 3px rgba(123,95,255,.2),0 0 32px rgba(123,95,255,.35);
+  position:relative;z-index:1;
+}
+.pc-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:19px;color:var(--white);margin-bottom:3px}
+.pc-role{font-size:12px;color:var(--txt2);line-height:1.5;margin-bottom:22px}
+.pc-sep{height:1px;background:var(--border);margin:18px 0}
+.pc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0}
+.pc-key{font-size:12px;color:var(--txt2)}
+.pc-val{font-family:'Fira Code',monospace;font-size:12px;font-weight:500;color:var(--white)}
+.pc-val.hi{color:#c4b5fd}
+.pc-val.gr{color:#6ee7b7}
+/* Focus areas */
+.focus-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.fc{
+  padding:4px 11px;border-radius:100px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  background:rgba(123,95,255,.12);border:1px solid rgba(123,95,255,.25);color:#c4b5fd;
+}
+/* ─── STATS ─── */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  margin-top:60px;border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  background:linear-gradient(145deg,var(--card),var(--panel));
+}
+.ss-item{
+  padding:28px 20px;text-align:center;
+  border-right:1px solid var(--border);position:relative;
+  transition:background .25s;overflow:hidden;
+}
+.ss-item:last-child{border-right:none}
+.ss-item::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(123,95,255,.07),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.ss-item:hover::before{opacity:1}
+.ss-num{
+  font-family:'Outfit',sans-serif;font-weight:900;
+  font-size:38px;letter-spacing:-2px;
+  background:linear-gradient(135deg,#c4b5fd,#93c5fd);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.ss-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--txt2);margin-top:4px}
+/* ─── SECTION HEADERS ─── */
+.sec-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Fira Code',monospace;font-size:11px;
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--a1);margin-bottom:18px;
+}
+.sec-tag::before{content:'//';color:rgba(123,95,255,.5)}
+h2{
+  font-family:'Outfit',sans-serif;font-weight:900;
+  font-size:clamp(32px,4vw,50px);
+  color:var(--white);letter-spacing:-1.5px;line-height:1.05;
+  margin-bottom:14px;
+}
+.sec-desc{color:var(--txt2);max-width:540px;font-size:15px;margin-bottom:60px}
+/* ─── AI FOCUS ─── */
+.ai-focus-section{background:linear-gradient(180deg,transparent,rgba(123,95,255,.04),transparent)}
+.focus-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.focus-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  cursor:default;
+}
+.focus-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 0%,var(--fc-color,rgba(123,95,255,.06)),transparent 70%);
+  opacity:0;transition:opacity .3s;
+}
+.focus-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 24px 64px var(--fc-shadow,rgba(123,95,255,.15));
+}
+.focus-card:hover::before{opacity:1}
+.focus-card:hover{border-color:var(--fc-border,rgba(123,95,255,.35))}
+.fc-icon{
+  width:56px;height:56px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;margin-bottom:20px;
+  background:var(--fc-bg,rgba(123,95,255,.12));
+  border:1px solid var(--fc-border,rgba(123,95,255,.2));
+}
+.fc-name{
+  font-family:'Outfit',sans-serif;font-weight:800;
+  font-size:18px;color:var(--white);margin-bottom:10px;
+}
+.fc-desc{font-size:13px;color:var(--txt2);line-height:1.7;margin-bottom:18px}
+.fc-techs{display:flex;flex-wrap:wrap;gap:6px}
+.fc-tech{
+  padding:3px 9px;border-radius:100px;
+  font-family:'Fira Code',monospace;
+  font-size:10px;font-weight:500;
+  color:var(--txt2);border:1px solid var(--border3);
+  background:rgba(255,255,255,.03);
+  transition:all .2s;
+}
+.focus-card:hover .fc-tech{border-color:var(--fc-border,rgba(123,95,255,.25));color:var(--txt)}
+/* ─── PROJECTS ─── */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proj-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:34px;
+  position:relative;overflow:hidden;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  transition:all .3s;
+  group:true;
+}
+.proj-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--pc-c1,rgba(123,95,255,.05)),transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.proj-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--pc-border,rgba(123,95,255,.4));
+  box-shadow:0 20px 60px var(--pc-shadow,rgba(123,95,255,.18));
+}
+.proj-card:hover::before{opacity:1}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.proj-ico{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  background:var(--pc-bg,rgba(123,95,255,.12));
+  border:1px solid var(--pc-border,rgba(123,95,255,.25));
+  transition:transform .3s;
+}
+.proj-card:hover .proj-ico{transform:scale(1.1) rotate(-5deg)}
+.proj-arrow{
+  width:34px;height:34px;border-radius:10px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:var(--txt2);
+  transition:all .3s;
+}
+.proj-card:hover .proj-arrow{
+  border-color:var(--pc-border,rgba(123,95,255,.4));
+  color:var(--pc-color,#c4b5fd);
+  transform:translate(3px,-3px);
+}
+.proj-title{
+  font-family:'Outfit',sans-serif;font-weight:800;
+  font-size:18px;color:var(--white);margin-bottom:10px;
+}
+.proj-desc{font-size:13px;color:var(--txt2);line-height:1.7;margin-bottom:20px;flex:1}
+.proj-tags{display:flex;flex-wrap:wrap;gap:7px}
+.ptag{
+  padding:3px 10px;border-radius:100px;
+  font-family:'Fira Code',monospace;font-size:10px;font-weight:500;
+  color:var(--txt2);border:1px solid var(--border3);
+  background:rgba(255,255,255,.03);
+}
+/* ─── EXPERIENCE ─── */
+.exp-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:48px;position:relative;overflow:hidden;
+}
+.exp-wrap::before{
+  content:'';position:absolute;left:0;top:48px;bottom:48px;
+  width:3px;background:linear-gradient(to bottom,var(--a1),var(--a2),var(--a4));
+  border-radius:0 3px 3px 0;
+}
+.exp-inner{padding-left:40px}
+.exp-title-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:12px}
+.exp-jobtitle{
+  font-family:'Outfit',sans-serif;font-weight:800;
+  font-size:22px;color:var(--white);
+}
+.exp-company{font-size:14px;color:var(--a1);font-weight:600;margin-bottom:24px}
+.exp-date-chip{
+  padding:5px 16px;border-radius:100px;
+  border:1px solid var(--border2);background:rgba(123,95,255,.06);
+  font-family:'Fira Code',monospace;font-size:11px;color:var(--txt2);
+  white-space:nowrap;
+}
+.exp-list{list-style:none}
+.exp-list li{
+  padding:6px 0 6px 22px;position:relative;
+  font-size:14px;color:var(--txt2);line-height:1.7;
+}
+.exp-list li::before{
+  content:'▹';position:absolute;left:0;top:7px;
+  color:var(--a1);font-size:13px;
+}
+.exp-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:20px;padding:10px 20px;border-radius:12px;
+  background:rgba(0,255,136,.07);
+  border:1px solid rgba(0,255,136,.2);
+  font-size:13px;color:var(--a4);font-weight:700;
+}
+/* ─── EDUCATION ─── */
+.edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.edu-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:32px;
+  position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s;
+}
+.edu-card:hover{transform:translateY(-4px);border-color:var(--border2)}
+.edu-card.full{grid-column:1/-1}
+.edu-accent{
+  position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--a1),var(--a2));
+}
+.edu-accent.b{background:linear-gradient(90deg,var(--a2),var(--a3))}
+.edu-accent.g{background:linear-gradient(90deg,var(--a4),var(--a2))}
+.edu-yr{
+  font-family:'Fira Code',monospace;font-size:11px;
+  color:var(--a1);margin-bottom:12px;letter-spacing:.05em;
+}
+.edu-deg{
+  font-family:'Outfit',sans-serif;font-weight:800;
+  font-size:17px;color:var(--white);margin-bottom:6px;
+}
+.edu-school{font-size:13px;color:var(--txt2);margin-bottom:14px}
+.edu-info{font-size:13px;color:var(--txt2);line-height:1.65}
+.edu-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:14px;padding:5px 14px;border-radius:100px;
+  font-size:11px;font-weight:700;letter-spacing:.04em;
+}
+.edu-pill.purple{color:#c4b5fd;background:rgba(196,181,253,.1);border:1px solid rgba(196,181,253,.25)}
+.edu-pill.green{color:var(--a4);background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.22)}
+.edu-pill.blue{color:#93c5fd;background:rgba(147,197,253,.1);border:1px solid rgba(147,197,253,.25)}
+/* ─── SKILLS ─── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sk-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:26px;
+  transition:border-color .25s,transform .25s;
+}
+.sk-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.sk-head{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:18px;
+}
+.sk-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.sk-label{font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;color:var(--white)}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pl{
+  padding:4px 12px;border-radius:100px;
+  font-family:'Fira Code',monospace;font-size:11px;
+  color:var(--txt2);border:1px solid var(--border3);
+  background:rgba(255,255,255,.03);
+  transition:all .2s;cursor:default;
+}
+.pl:hover{color:var(--txt);border-color:rgba(123,95,255,.3);background:rgba(123,95,255,.08)}
+/* ─── CERTS ─── */
+.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:18px 22px;
+  display:flex;align-items:center;gap:16px;
+  transition:all .2s;
+}
+.cert-card:hover{border-color:var(--border2);transform:translateX(5px)}
+.cert-dot{
+  width:44px;height:44px;border-radius:12px;
+  flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;
+  font-weight:900;font-size:15px;font-family:'Outfit',sans-serif;
+}
+.cert-name{font-size:13px;font-weight:600;color:var(--white);line-height:1.4}
+.cert-from{font-family:'Fira Code',monospace;font-size:11px;color:var(--txt2);margin-top:3px}
+.cert-badge{
+  display:inline-block;margin-left:7px;
+  padding:2px 8px;border-radius:100px;
+  font-size:9px;font-weight:800;letter-spacing:.07em;
+  background:linear-gradient(135deg,var(--a1),var(--a2));
+  color:#fff;vertical-align:middle;
+}
+/* ─── ACTIVITIES ─── */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.act-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  transition:all .25s;
+}
+.act-card:hover{transform:translateY(-4px);border-color:var(--border2);box-shadow:0 16px 48px rgba(123,95,255,.12)}
+.act-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a1);margin-bottom:10px}
+.act-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;color:var(--white);margin-bottom:8px;line-height:1.35}
+.act-desc{font-size:12px;color:var(--txt2);line-height:1.65}
+.act-date{font-family:'Fira Code',monospace;font-size:10px;color:var(--txt2);margin-top:12px;opacity:.7}
+/* ─── CONTACT ─── */
+.contact-shell{
+  position:relative;background:var(--card);
+  border:1px solid var(--border);border-radius:32px;
+  padding:80px 60px;text-align:center;overflow:hidden;
+}
+.contact-shell::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,95,255,.1),transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.contact-shell::after{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:400px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(123,95,255,.7),rgba(0,212,255,.5),transparent);
+}
+.contact-shell h2{position:relative;font-size:48px;margin-bottom:14px}
+.contact-shell p{position:relative;color:var(--txt2);font-size:16px;margin-bottom:48px;max-width:440px;margin-left:auto;margin-right:auto}
+.clinks{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
+.clink{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:14px;
+  border:1px solid var(--border2);background:rgba(255,255,255,.04);
+  color:var(--txt);text-decoration:none;font-size:14px;font-weight:600;
+  transition:all .25s;
+}
+.clink:hover{
+  border-color:rgba(123,95,255,.5);color:#c4b5fd;
+  background:rgba(123,95,255,.08);
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(123,95,255,.2);
+}
+/* ─── FOOTER ─── */
+footer{
+  border-top:1px solid var(--border);
+  padding:28px 0;text-align:center;
+  font-family:'Fira Code',monospace;
+  font-size:11px;color:var(--txt2);
+  position:relative;z-index:1;
+}
+footer span{color:var(--a1)}
+/* ─── REVEAL ─── */
+.reveal{
+  opacity:0;transform:translateY(32px);
+  transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1);
+}
+.reveal.in{opacity:1;transform:none}
+.reveal.left{transform:translateX(-32px)}
+.reveal.left.in{transform:none}
+.reveal.right{transform:translateX(32px)}
+.reveal.right.in{transform:none}
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr}
+  .profile-card{display:none}
+  .focus-grid,.skills-grid{grid-template-columns:1fr 1fr}
+  .proj-grid,.edu-grid,.certs-grid,.act-grid{grid-template-columns:1fr}
+  .edu-card.full{grid-column:auto}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .contact-shell{padding:48px 28px}
+  .contact-shell h2{font-size:34px}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  h2{font-size:30px}
+}
+@media(max-width:640px){
+  .focus-grid,.skills-grid{grid-template-columns:1fr}
+  .hero-h{font-size:40px}
+}
+</style>
 </head>
 <body>
 
-  <!-- ORBS -->
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
+<!-- Custom cursor -->
+<div id="cur"></div>
+<div id="cur-trail"></div>
 
-  <!-- NAV -->
-  <nav>
-    <div class="container">
-      <div class="nav-logo">YM<span>.</span></div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#certs">Certs</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+<!-- Neural network background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">YM<span style="color:#7b5fff">.</span></div>
+  <ul class="nav-links">
+    <li><a href="#focus">AI Focus</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-btn" href="#contact">Let's Talk →</a>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="status-pill">
+          <span class="pulse"></span>
+          Available · Tuwaiq Academy · Data Science & AI Diploma
+        </div>
+
+        <h1 class="hero-h">
+          Yahya
+          <span class="name">Majrashi</span>
+        </h1>
+
+        <div class="tw-wrap">
+          <span class="prompt">~/ai $ </span><span id="typewriter"></span>
+        </div>
+
+        <p class="hero-desc">
+          Information Technology graduate with a passion for transforming data into intelligence.
+          Currently deepening expertise in <strong>Machine Learning, Deep Learning, NLP</strong>,
+          and <strong>Computer Vision</strong> at Tuwaiq Academy — building AI systems that
+          solve real-world problems. <strong>1st Rank · CGPA 4.84/5.00</strong> at Jazan University.
+        </p>
+
+        <div class="domains">
+          <span class="dom dom-ai">Artificial Intelligence</span>
+          <span class="dom dom-ds">Data Science</span>
+          <span class="dom dom-ml">Machine Learning</span>
+          <span class="dom dom-dl">Deep Learning</span>
+          <span class="dom dom-nlp">NLP</span>
+          <span class="dom dom-cv">Computer Vision</span>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn-grad" href="#projects">View Projects ↓</a>
+          <a class="btn-outline" href="https://github.com/iYm10" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub Profile
+          </a>
+        </div>
+
+        <div class="stats-strip">
+          <div class="ss-item"><div class="ss-num">4.84</div><div class="ss-lbl">GPA / 5.00</div></div>
+          <div class="ss-item"><div class="ss-num">6+</div><div class="ss-lbl">AI Projects</div></div>
+          <div class="ss-item"><div class="ss-num">14+</div><div class="ss-lbl">Certifications</div></div>
+          <div class="ss-item"><div class="ss-num">1st</div><div class="ss-lbl">Dept. Rank</div></div>
+        </div>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="profile-card reveal right">
+        <div class="pc-avatar">YM</div>
+        <div class="pc-name">Yahya Majrashi</div>
+        <div class="pc-role">AI & Data Science Student<br/>IT Graduate · Saudi Arabia 🇸🇦</div>
+        <div class="pc-sep"></div>
+        <div class="pc-row"><span class="pc-key">University</span><span class="pc-val">Jazan University</span></div>
+        <div class="pc-row"><span class="pc-key">CGPA</span><span class="pc-val hi">4.84 / 5.00</span></div>
+        <div class="pc-row"><span class="pc-key">Rank</span><span class="pc-val hi">1st · IT Dept.</span></div>
+        <div class="pc-row"><span class="pc-key">Currently</span><span class="pc-val gr">Tuwaiq Academy</span></div>
+        <div class="pc-row"><span class="pc-key">GitHub</span><span class="pc-val">iYm10</span></div>
+        <div class="pc-row"><span class="pc-key">Focus</span><span class="pc-val hi">AI / ML / DL</span></div>
+        <div class="pc-sep"></div>
+        <div style="font-size:11px;color:var(--txt2);margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700">AI Focus Areas</div>
+        <div class="focus-chips">
+          <span class="fc">Machine Learning</span>
+          <span class="fc">Deep Learning</span>
+          <span class="fc">NLP</span>
+          <span class="fc">Computer Vision</span>
+          <span class="fc">Generative AI</span>
+          <span class="fc">Data Science</span>
+        </div>
+      </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section id="about">
-    <div class="container">
-      <div class="hero-inner">
+<!-- ════ AI FOCUS ════ -->
+<section id="focus" class="ai-focus-section">
+  <div class="wrap">
+    <div class="sec-tag">AI Expertise</div>
+    <h2>What I Work On</h2>
+    <p class="sec-desc">My current focus areas at Tuwaiq Academy and through self-directed learning and project work.</p>
+
+    <div class="focus-grid">
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(196,181,253,.06);--fc-shadow:rgba(196,181,253,.15);--fc-border:rgba(196,181,253,.35);--fc-bg:rgba(196,181,253,.1);">
+        <div class="fc-icon" style="--fc-bg:rgba(196,181,253,.1);--fc-border:rgba(196,181,253,.2);">🤖</div>
+        <div class="fc-name">Machine Learning</div>
+        <div class="fc-desc">Supervised & unsupervised learning, model evaluation, feature engineering, and hyperparameter tuning to build predictive systems.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">Scikit-learn</span><span class="fc-tech">XGBoost</span>
+          <span class="fc-tech">Random Forest</span><span class="fc-tech">SVM</span>
+          <span class="fc-tech">Pipelines</span>
+        </div>
+      </div>
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(147,197,253,.06);--fc-shadow:rgba(147,197,253,.15);--fc-border:rgba(147,197,253,.35);--fc-bg:rgba(147,197,253,.1);">
+        <div class="fc-icon" style="--fc-bg:rgba(147,197,253,.1);--fc-border:rgba(147,197,253,.2);">🧠</div>
+        <div class="fc-name">Deep Learning</div>
+        <div class="fc-desc">Neural network architectures — CNNs, RNNs, Transformers — for complex pattern recognition in images, time-series, and text data.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">TensorFlow</span><span class="fc-tech">Keras</span>
+          <span class="fc-tech">PyTorch</span><span class="fc-tech">CNN</span>
+          <span class="fc-tech">Transformers</span>
+        </div>
+      </div>
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(253,230,138,.06);--fc-shadow:rgba(253,230,138,.12);--fc-border:rgba(253,230,138,.35);--fc-bg:rgba(253,230,138,.1);">
+        <div class="fc-icon" style="--fc-bg:rgba(253,230,138,.1);--fc-border:rgba(253,230,138,.2);">💬</div>
+        <div class="fc-name">NLP</div>
+        <div class="fc-desc">Natural Language Processing — text classification, sentiment analysis, named entity recognition, and large language model applications.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">BERT</span><span class="fc-tech">HuggingFace</span>
+          <span class="fc-tech">NLTK</span><span class="fc-tech">spaCy</span>
+          <span class="fc-tech">LLMs</span>
+        </div>
+      </div>
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(249,168,212,.06);--fc-shadow:rgba(249,168,212,.12);--fc-border:rgba(249,168,212,.35);">
+        <div class="fc-icon" style="--fc-bg:rgba(249,168,212,.1);--fc-border:rgba(249,168,212,.2);">👁️</div>
+        <div class="fc-name">Computer Vision</div>
+        <div class="fc-desc">Image recognition, object detection, and visual analysis pipelines for extracting meaning from visual data in real-world applications.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">OpenCV</span><span class="fc-tech">YOLO</span>
+          <span class="fc-tech">CNN</span><span class="fc-tech">Image Classification</span>
+        </div>
+      </div>
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(110,231,183,.06);--fc-shadow:rgba(110,231,183,.12);--fc-border:rgba(110,231,183,.35);">
+        <div class="fc-icon" style="--fc-bg:rgba(110,231,183,.1);--fc-border:rgba(110,231,183,.2);">📊</div>
+        <div class="fc-name">Data Science & EDA</div>
+        <div class="fc-desc">Exploratory data analysis, statistical modeling, data storytelling, and building interactive dashboards to communicate insights effectively.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">Pandas</span><span class="fc-tech">NumPy</span>
+          <span class="fc-tech">Matplotlib</span><span class="fc-tech">Seaborn</span>
+          <span class="fc-tech">Plotly</span><span class="fc-tech">Streamlit</span>
+        </div>
+      </div>
+
+      <div class="focus-card reveal"
+        style="--fc-color:rgba(252,165,165,.06);--fc-shadow:rgba(252,165,165,.12);--fc-border:rgba(252,165,165,.35);">
+        <div class="fc-icon" style="--fc-bg:rgba(252,165,165,.1);--fc-border:rgba(252,165,165,.2);">✨</div>
+        <div class="fc-name">Generative AI</div>
+        <div class="fc-desc">Prompt engineering, LLM applications, and integrating generative AI capabilities — with IBM certifications in AI for cybersecurity and applications.</div>
+        <div class="fc-techs">
+          <span class="fc-tech">Prompt Engineering</span><span class="fc-tech">LLMs</span>
+          <span class="fc-tech">RAG</span><span class="fc-tech">IBM AI Certified</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJECTS ════ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-tag">Portfolio</div>
+    <h2>Featured Projects</h2>
+    <p class="sec-desc">Real ML and AI systems built with Python. Each project links directly to GitHub.</p>
+
+    <div class="proj-grid">
+
+      <a class="proj-card reveal"
+        href="https://github.com/iYm10/CityPulse-AI" target="_blank"
+        style="--pc-c1:rgba(123,95,255,.06);--pc-border:rgba(123,95,255,.4);--pc-shadow:rgba(123,95,255,.2);--pc-bg:rgba(123,95,255,.1);--pc-color:#c4b5fd;">
+        <div class="proj-top">
+          <div class="proj-ico" style="--pc-bg:rgba(123,95,255,.12);--pc-border:rgba(123,95,255,.3);">🏙️</div>
+          <div class="proj-arrow">↗</div>
+        </div>
+        <div class="proj-title">CityPulse AI</div>
+        <div class="proj-desc">AI-powered Smart City Decision Support Platform. Fuses road collision data, weather, air quality, and mobility patterns to predict urban risk levels with interactive ML dashboards.</div>
+        <div class="proj-tags">
+          <span class="ptag">Python</span><span class="ptag">Machine Learning</span>
+          <span class="ptag">Flask</span><span class="ptag">Urban Analytics</span><span class="ptag">Dashboards</span>
+        </div>
+      </a>
+
+      <a class="proj-card reveal"
+        href="https://github.com/iYm10/student-depression-prediction" target="_blank"
+        style="--pc-c1:rgba(110,231,183,.06);--pc-border:rgba(110,231,183,.4);--pc-shadow:rgba(110,231,183,.15);--pc-bg:rgba(110,231,183,.1);--pc-color:#6ee7b7;">
+        <div class="proj-top">
+          <div class="proj-ico" style="--pc-bg:rgba(110,231,183,.12);--pc-border:rgba(110,231,183,.3);">🧠</div>
+          <div class="proj-arrow">↗</div>
+        </div>
+        <div class="proj-title">Student Depression Prediction</div>
+        <div class="proj-desc">ML classification model predicting student depression risk from lifestyle and academic factors. Features an interactive Streamlit web app for real-time mental health assessment.</div>
+        <div class="proj-tags">
+          <span class="ptag">Classification</span><span class="ptag">Streamlit</span>
+          <span class="ptag">Healthcare AI</span><span class="ptag">Jupyter</span><span class="ptag">Python</span>
+        </div>
+      </a>
+
+      <a class="proj-card reveal"
+        href="https://github.com/iYm10/streamlit_tourism_app" target="_blank"
+        style="--pc-c1:rgba(0,212,255,.06);--pc-border:rgba(0,212,255,.4);--pc-shadow:rgba(0,212,255,.15);--pc-bg:rgba(0,212,255,.1);--pc-color:#67e8f9;">
+        <div class="proj-top">
+          <div class="proj-ico" style="--pc-bg:rgba(0,212,255,.12);--pc-border:rgba(0,212,255,.3);">📈</div>
+          <div class="proj-arrow">↗</div>
+        </div>
+        <div class="proj-title">Saudi Tourism EDA 2015–2024</div>
+        <div class="proj-desc">Full exploratory data analysis on a decade of Saudi Arabia tourism data. Uncovers trends in tourist spending, overnight stays, regional performance, and seasonal patterns with rich visualizations.</div>
+        <div class="proj-tags">
+          <span class="ptag">EDA</span><span class="ptag">Pandas</span>
+          <span class="ptag">Seaborn</span><span class="ptag">Streamlit</span><span class="ptag">Matplotlib</span>
+        </div>
+      </a>
+
+      <a class="proj-card reveal"
+        href="https://github.com/iYm10/smart-london-urban-risk-prediction" target="_blank"
+        style="--pc-c1:rgba(253,230,138,.06);--pc-border:rgba(253,230,138,.4);--pc-shadow:rgba(253,230,138,.12);--pc-bg:rgba(253,230,138,.1);--pc-color:#fde68a;">
+        <div class="proj-top">
+          <div class="proj-ico" style="--pc-bg:rgba(253,230,138,.12);--pc-border:rgba(253,230,138,.3);">🗺️</div>
+          <div class="proj-arrow">↗</div>
+        </div>
+        <div class="proj-title">Smart London Urban Risk Prediction</div>
+        <div class="proj-desc">Multi-source ML pipeline predicting London urban risk by fusing road collisions, weather data, air quality indices, and mobility datasets into a unified prediction model.</div>
+        <div class="proj-tags">
+          <span class="ptag">Python</span><span class="ptag">Multi-source Data</span>
+          <span class="ptag">Risk Modeling</span><span class="ptag">ML Pipeline</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center;margin-top:40px">
+      <a class="btn-outline" href="https://github.com/iYm10" target="_blank">View All Projects on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ EXPERIENCE ════ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-tag">Career</div>
+    <h2>Work Experience</h2>
+    <p class="sec-desc">Hands-on IT and cybersecurity experience in critical healthcare environments.</p>
+    <div class="exp-wrap reveal">
+      <div class="exp-inner">
+        <div class="exp-title-row">
+          <div>
+            <div class="exp-jobtitle">IT Trainee Intern</div>
+            <div class="exp-company">Al Hurrath General Hospital</div>
+          </div>
+          <div class="exp-date-chip">Jun 2024 — Jul 2024</div>
+        </div>
+        <ul class="exp-list">
+          <li>Provided healthcare IT support, resolving critical system issues on the VIDA EMR (Electronic Medical Records) platform used for patient care.</li>
+          <li>Performed system troubleshooting, network repair, and software configuration ensuring seamless hospital operations.</li>
+          <li>Played a key role in a major cybersecurity incident response — resolved the global CrowdStrike outage on-site, minimizing hospital downtime.</li>
+          <li>Gained hands-on skills in hardware maintenance, network device management, and telemedicine infrastructure setup.</li>
+        </ul>
+        <div class="exp-badge">⚡ Resolved the Global CrowdStrike Outage On-Site</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ EDUCATION ════ -->
+<section id="education">
+  <div class="wrap">
+    <div class="sec-tag">Academic</div>
+    <h2>Education</h2>
+    <p class="sec-desc">Top academic performance with international exposure.</p>
+    <div class="edu-grid">
+
+      <div class="edu-card full reveal">
+        <div class="edu-accent g"></div>
+        <div class="edu-yr">Apr 2026 — Dec 2026 · Expected</div>
+        <div class="edu-deg">Diploma in Data Science & Artificial Intelligence</div>
+        <div class="edu-school">Tuwaiq Academy · Riyadh, Saudi Arabia</div>
+        <div class="edu-info">Saudi Arabia's leading technology academy. Intensive curriculum covering ML, DL, NLP, Computer Vision, and AI engineering — with industry mentors and real-world capstone projects.</div>
+        <span class="edu-pill green">⚡ Currently Enrolled</span>
+      </div>
+
+      <div class="edu-card reveal left">
+        <div class="edu-accent"></div>
+        <div class="edu-yr">2021 — 2026</div>
+        <div class="edu-deg">BSc in Information Technology</div>
+        <div class="edu-school">Jazan University · Jazan, Saudi Arabia</div>
+        <div class="edu-info">
+          CGPA 4.84/5.00 · First Class Honor · 1st Rank in IT Department.<br/><br/>
+          Graduation Project: <strong style="color:var(--txt)">"StuGuide"</strong> — a comprehensive web-based platform enhancing student academic experience. Phase 1 & 2: A+ Grade.
+        </div>
+        <span class="edu-pill purple">🏆 First Class Honor · 1st Rank</span>
+      </div>
+
+      <div class="edu-card reveal right">
+        <div class="edu-accent b"></div>
+        <div class="edu-yr">Jul 2022 · 24 Weeks</div>
+        <div class="edu-deg">Intensive English Language Program</div>
+        <div class="edu-school">IEC at University of Colorado Boulder, USA</div>
+        <div class="edu-info">Completed a full intensive English program at a leading US university, building strong academic communication and cross-cultural competence in an international setting.</div>
+        <span class="edu-pill blue">🌎 Study Abroad · USA</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ SKILLS ════ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-tag">Expertise</div>
+    <h2>Skills & Tech Stack</h2>
+    <p class="sec-desc">A deep technical toolbox spanning AI, data, development, and security.</p>
+    <div class="skills-grid">
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(196,181,253,.12)">🤖</div>
+          <div class="sk-label">AI & Machine Learning</div>
+        </div>
+        <div class="pills">
+          <span class="pl">Scikit-learn</span><span class="pl">XGBoost</span>
+          <span class="pl">Random Forest</span><span class="pl">SVM</span>
+          <span class="pl">ML Pipelines</span><span class="pl">Feature Engineering</span>
+        </div>
+      </div>
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(147,197,253,.12)">🧠</div>
+          <div class="sk-label">Deep Learning</div>
+        </div>
+        <div class="pills">
+          <span class="pl">TensorFlow</span><span class="pl">Keras</span>
+          <span class="pl">PyTorch</span><span class="pl">CNN</span>
+          <span class="pl">RNN / LSTM</span><span class="pl">Transformers</span>
+        </div>
+      </div>
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(253,230,138,.12)">💬</div>
+          <div class="sk-label">NLP & GenAI</div>
+        </div>
+        <div class="pills">
+          <span class="pl">BERT</span><span class="pl">HuggingFace</span>
+          <span class="pl">NLTK</span><span class="pl">spaCy</span>
+          <span class="pl">LLMs</span><span class="pl">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(110,231,183,.12)">📊</div>
+          <div class="sk-label">Data Science</div>
+        </div>
+        <div class="pills">
+          <span class="pl">Python</span><span class="pl">Pandas</span>
+          <span class="pl">NumPy</span><span class="pl">Matplotlib</span>
+          <span class="pl">Seaborn</span><span class="pl">Plotly</span>
+          <span class="pl">Streamlit</span>
+        </div>
+      </div>
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(249,115,22,.12)">⟨/⟩</div>
+          <div class="sk-label">Development</div>
+        </div>
+        <div class="pills">
+          <span class="pl">Python</span><span class="pl">Java</span>
+          <span class="pl">Flask</span><span class="pl">Web Development</span>
+          <span class="pl">Jupyter</span><span class="pl">Git / GitHub</span>
+        </div>
+      </div>
+
+      <div class="sk-card reveal">
+        <div class="sk-head">
+          <div class="sk-icon" style="background:rgba(0,212,255,.12)">🛡️</div>
+          <div class="sk-label">Cybersecurity & IT</div>
+        </div>
+        <div class="pills">
+          <span class="pl">Secure Networking</span><span class="pl">Incident Response</span>
+          <span class="pl">Microsoft 365</span><span class="pl">EMR Systems</span>
+          <span class="pl">Hardware Maintenance</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ CERTIFICATIONS ════ -->
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-tag">Credentials</div>
+    <h2>Certifications</h2>
+    <p class="sec-desc">Professional and foundational credentials from IBM, Microsoft, and SDAIA.</p>
+    <div class="certs-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,104,204,.15);color:#60a5fa">IBM</div>
         <div>
-          <div class="current-badge fade-in">
-            <span class="dot"></span>
-            Currently at Tuwaiq Academy · Data Science & AI Diploma
-          </div>
-          <div class="hero-label fade-in delay-1">IT Graduate · Saudi Arabia</div>
-          <h1 class="fade-in delay-2">Yahya<br /><em>Majrashi</em></h1>
-          <p class="hero-sub fade-in delay-3">
-            Information Technology graduate passionate about Artificial Intelligence,
-            IoT, and Cybersecurity. Building smart systems and digital transformation
-            solutions that make a difference.
-          </p>
-          <div class="hero-tags fade-in delay-3">
-            <span class="tag accent">AI & Data Science</span>
-            <span class="tag blue">Cybersecurity</span>
-            <span class="tag pink">IoT Systems</span>
-            <span class="tag">Web Development</span>
-            <span class="tag">Digital Transformation</span>
-          </div>
-          <div class="hero-cta fade-in delay-4">
-            <a class="btn btn-primary" href="#contact">Get In Touch →</a>
-            <a class="btn btn-outline" href="#education">View Background</a>
-          </div>
-        </div>
-        <div class="avatar-card fade-in delay-5">
-          <div class="avatar-initial">YM</div>
-          <div class="avatar-name">Yahya Majrashi</div>
-          <div class="avatar-gpa">CGPA 4.84 / 5.00</div>
-          <div class="avatar-badge">🏆 1st Rank · IT Dept.</div>
+          <div class="cert-name">Generative AI for Cybersecurity Professionals Specialization<span class="cert-badge">PRO</span></div>
+          <div class="cert-from">IBM · Aug 2024</div>
         </div>
       </div>
 
-      <!-- STATS -->
-      <div class="stats-row fade-in">
-        <div class="stat-item">
-          <div class="stat-num">4.84<span>/5</span></div>
-          <div class="stat-label">CGPA</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">15<span>+</span></div>
-          <div class="stat-label">Certifications</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">140<span>+</span></div>
-          <div class="stat-label">Volunteer Hours</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">1<span>st</span></div>
-          <div class="stat-label">Dept. Rank</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <h2>Education</h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="edu-grid">
-        <!-- Current -->
-        <div class="edu-card featured">
-          <div class="edu-year">2025 – Present · CURRENT</div>
-          <div class="edu-degree">Diploma in Data Science & Artificial Intelligence</div>
-          <div class="edu-school">Tuwaiq Academy, Saudi Arabia</div>
-          <div class="edu-detail">Intensive program covering machine learning, data analysis, deep learning, and AI applications. Hands-on training with industry-grade tools and real-world datasets.</div>
-          <span class="edu-highlight">⚡ Currently Enrolled</span>
-        </div>
-
-        <!-- JU -->
-        <div class="edu-card">
-          <div class="edu-year">2021 – 2026</div>
-          <div class="edu-degree">BSc in Information Technology</div>
-          <div class="edu-school">Jazan University · Jazan, Saudi Arabia</div>
-          <div class="edu-detail">
-            First Class Honor · CGPA 4.84/5.00 · 1st Rank in IT Department.<br /><br />
-            Graduation Project: <strong style="color:var(--text)">"StuGuide"</strong> — a comprehensive web-based platform for enhancing student academic experience. Phase 1 & 2: A+ Grade.
-          </div>
-          <span class="edu-highlight">🏆 First Class Honor</span>
-        </div>
-
-        <!-- English -->
-        <div class="edu-card blue">
-          <div class="edu-year">Jul 2022 · 24 Weeks</div>
-          <div class="edu-degree">Intensive English Language Program</div>
-          <div class="edu-school">IEC at University of Colorado Boulder, USA</div>
-          <div class="edu-detail">Completed a full intensive English program in the United States, building strong communication and academic language skills in an international environment.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <h2>Experience</h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-date">Jun 2024 – Jul 2024</div>
-          <div class="exp-org">Al Hurrath General Hospital</div>
-        </div>
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,120,255,.12);color:#93c5fd">MS</div>
         <div>
-          <div class="exp-role">IT Trainee Intern</div>
-          <ul class="exp-points">
-            <li>Hands-on experience in healthcare IT support, resolving technical issues for the VIDA EMR platform.</li>
-            <li>Performed system troubleshooting, network repair, and software configuration for seamless hospital operations.</li>
-            <li>Played a key role in cybersecurity incident response by resolving the global CrowdStrike outage on-site.</li>
-            <li>Developed technical skills in hardware maintenance, network devices, and telemedicine setup.</li>
-          </ul>
+          <div class="cert-name">Microsoft IT Support Specialist<span class="cert-badge">PRO</span></div>
+          <div class="cert-from">Microsoft · Sep 2024</div>
         </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,255,136,.08);color:#6ee7b7">SA</div>
+        <div>
+          <div class="cert-name">AI Concepts and Advanced Applications</div>
+          <div class="cert-from">SDAIA · Sep 2025</div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,255,136,.08);color:#6ee7b7">AI</div>
+        <div>
+          <div class="cert-name">Fundamentals of Artificial Intelligence</div>
+          <div class="cert-from">Sep 2025</div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,104,204,.15);color:#60a5fa">IBM</div>
+        <div>
+          <div class="cert-name">Cybersecurity Fundamentals</div>
+          <div class="cert-from">IBM · Jun 2024</div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,104,204,.15);color:#60a5fa">IBM</div>
+        <div>
+          <div class="cert-name">Generative AI: Prompt Engineering Basics</div>
+          <div class="cert-from">IBM · Aug 2024</div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,104,204,.15);color:#60a5fa">IBM</div>
+        <div>
+          <div class="cert-name">Generative AI: Boost Your Cybersecurity Career</div>
+          <div class="cert-from">IBM · Aug 2024</div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-dot" style="background:rgba(0,120,255,.12);color:#93c5fd">MS</div>
+        <div>
+          <div class="cert-name">The Microsoft 365 Ecosystem</div>
+          <div class="cert-from">Microsoft · Sep 2024</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ ACTIVITIES ════ -->
+<section id="activities">
+  <div class="wrap">
+    <div class="sec-tag">Community</div>
+    <h2>Activities & Volunteering</h2>
+    <p class="sec-desc">Active in tech communities, cybersecurity clubs, and social impact programs.</p>
+    <div class="act-grid">
+
+      <div class="act-card reveal">
+        <div class="act-tag">🏆 Award</div>
+        <div class="act-name">Excellence Award — 1st Place</div>
+        <div class="act-desc">Ranked 1st in the Information Technology Department at Jazan University, academic year 2022–2023.</div>
+        <div class="act-date">Jazan University · 2022–2023</div>
+      </div>
+
+      <div class="act-card reveal">
+        <div class="act-tag">🛡 Cybersecurity</div>
+        <div class="act-name">Computer & Cyber Security Club, JU</div>
+        <div class="act-desc">Events Organize & Management Team — planned and executed cybersecurity workshops and educational programs for university students.</div>
+        <div class="act-date">Jul 2023 – Dec 2025</div>
+      </div>
+
+      <div class="act-card reveal">
+        <div class="act-tag">🔧 Developer</div>
+        <div class="act-name">Google Developer Student Clubs, JU</div>
+        <div class="act-desc">Developing & Training team — contributed to technical training programs supporting students' programming and technical growth.</div>
+        <div class="act-date">Oct 2024 – Dec 2025</div>
+      </div>
+
+      <div class="act-card reveal">
+        <div class="act-tag">🛡 KSU</div>
+        <div class="act-name">Cyber Security Club, KSU</div>
+        <div class="act-desc">Technology Committee — supported cybersecurity awareness programs and technical operations in Riyadh.</div>
+        <div class="act-date">Sep 2024 – Oct 2024</div>
+      </div>
+
+      <div class="act-card reveal">
+        <div class="act-tag">💛 Volunteer · 100 Hrs</div>
+        <div class="act-name">University Volunteer Club, Abha</div>
+        <div class="act-desc">100 hours of community service, outreach programs, and social impact initiatives in Abha over three focused weeks.</div>
+        <div class="act-date">Oct 8–27, 2025</div>
+      </div>
+
+      <div class="act-card reveal">
+        <div class="act-tag">💛 Volunteer · 40 Hrs</div>
+        <div class="act-name">Voluntary Work Association, Hail</div>
+        <div class="act-desc">40 hours with the Voluntary Work and Community Service Association, contributing to community programs in Hail.</div>
+        <div class="act-date">Sep 26–30, 2025</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-shell reveal">
+      <h2>Let's Build<br/>Something<br/><span style="background:linear-gradient(135deg,#c4b5fd,#67e8f9,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Intelligent.</span></h2>
+      <p>Open to AI, Data Science & ML opportunities. Let's connect and create something impactful.</p>
+      <div class="clinks">
+        <a class="clink" href="mailto:zyly327@gmail.com">✉ zyly327@gmail.com</a>
+        <a class="clink" href="tel:+966554217082">📞 +966 55 421 7082</a>
+        <a class="clink" href="https://github.com/iYm10" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          github.com/iYm10
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/yahya-majrashi" target="_blank">🔗 LinkedIn</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">03</span>
-        <h2>Skills</h2>
-        <div class="section-line"></div>
-      </div>
+<footer>
+  <div class="wrap">
+    Yahya Majrashi &nbsp;<span>·</span>&nbsp; AI & Data Science &nbsp;<span>·</span>&nbsp;
+    Jazan University &nbsp;<span>·</span>&nbsp; Tuwaiq Academy &nbsp;<span>·</span>&nbsp; 2026
+  </div>
+</footer>
 
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">⟨/⟩</span> Programming & Dev</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Python</span>
-            <span class="skill-pill">Java</span>
-            <span class="skill-pill">Web Development</span>
-            <span class="skill-pill">HTML/CSS</span>
-            <span class="skill-pill">IoT Systems</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">🛡</span> Cybersecurity</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Secure Networking</span>
-            <span class="skill-pill">Incident Response</span>
-            <span class="skill-pill">Cybersecurity Fundamentals</span>
-            <span class="skill-pill">Privacy & Compliance</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">🤖</span> AI & Data</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Generative AI</span>
-            <span class="skill-pill">Prompt Engineering</span>
-            <span class="skill-pill">Data Science</span>
-            <span class="skill-pill">Machine Learning</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">🖥</span> IT Support</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Technical Troubleshooting</span>
-            <span class="skill-pill">Hardware Maintenance</span>
-            <span class="skill-pill">Microsoft 365</span>
-            <span class="skill-pill">EMR Systems</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">📋</span> Management</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Digital Project Management</span>
-            <span class="skill-pill">Digital Media</span>
-            <span class="skill-pill">Creative Consultancy</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title"><span class="icon">🤝</span> Soft Skills</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Team Leadership</span>
-            <span class="skill-pill">Problem Solving</span>
-            <span class="skill-pill">Communication</span>
-            <span class="skill-pill">Creative Thinking</span>
-            <span class="skill-pill">Time Management</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cur');
+const trail = document.getElementById('cur-trail');
+let mx=window.innerWidth/2, my=window.innerHeight/2;
+let tx=mx, ty=my;
 
-  <!-- CERTIFICATIONS -->
-  <section id="certs">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">04</span>
-        <h2>Certifications</h2>
-        <div class="section-line"></div>
-      </div>
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx+'px'; cur.style.top = my+'px';
+});
+(function moveTrail(){
+  tx += (mx-tx)*.1; ty += (my-ty)*.1;
+  trail.style.left = tx+'px'; trail.style.top = ty+'px';
+  requestAnimationFrame(moveTrail);
+})();
+document.querySelectorAll('a,button,.focus-card,.proj-card,.sk-card,.act-card').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>cur.classList.add('expand'));
+  el.addEventListener('mouseleave', ()=>cur.classList.remove('expand'));
+});
 
-      <div class="certs-grid">
-        <div class="cert-item">
-          <div class="cert-icon ibm">🔵</div>
-          <div>
-            <div class="cert-name">Generative AI for Cybersecurity Professionals Specialization</div>
-            <div class="cert-issuer">IBM · Aug 2024</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon ms">🟦</div>
-          <div>
-            <div class="cert-name">Microsoft IT Support Specialist</div>
-            <div class="cert-issuer">Microsoft · Sep 2024</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon ibm">🔵</div>
-          <div>
-            <div class="cert-name">Cybersecurity Fundamentals</div>
-            <div class="cert-issuer">IBM · Jun 2024</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon sa">🟢</div>
-          <div>
-            <div class="cert-name">AI Concepts and Advanced Applications</div>
-            <div class="cert-issuer">SDAIA · Sep 2025</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon sa">🟢</div>
-          <div>
-            <div class="cert-name">Fundamentals of Artificial Intelligence</div>
-            <div class="cert-issuer">Sep 2025</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon ibm">🔵</div>
-          <div>
-            <div class="cert-name">Generative AI: Prompt Engineering Basics</div>
-            <div class="cert-issuer">IBM · Aug 2024</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon ms">🟦</div>
-          <div>
-            <div class="cert-name">The Microsoft 365 Ecosystem</div>
-            <div class="cert-issuer">Microsoft · Sep 2024</div>
-          </div>
-        </div>
-        <div class="cert-item">
-          <div class="cert-icon ibm">🔵</div>
-          <div>
-            <div class="cert-name">Introduction to Secure Networking</div>
-            <div class="cert-issuer">Aug 2024</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+/* ── NEURAL NETWORK CANVAS ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, nodes=[], animId;
 
-  <!-- ACTIVITIES -->
-  <section id="activities">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">05</span>
-        <h2>Activities & Volunteering</h2>
-        <div class="section-line"></div>
-      </div>
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', ()=>{ resize(); initNodes(); });
 
-      <div class="act-grid">
-        <div class="act-card">
-          <div class="act-type">Club · Jul 2023 – Dec 2025</div>
-          <div class="act-title">Computer & Cyber Security Club, JU</div>
-          <div class="act-desc">Member of the Organize & Management of Events Team. Planning and executing cybersecurity events, workshops, and educational programs for university students.</div>
-        </div>
-        <div class="act-card">
-          <div class="act-type">Club · Oct 2024 – Dec 2025</div>
-          <div class="act-title">Google Developer Student Clubs, JU</div>
-          <div class="act-desc">Member of the Developing & Training team. Contributing to technical training programs and development initiatives in a hybrid work environment.</div>
-        </div>
-        <div class="act-card">
-          <div class="act-type">Club · Sep 2024 – Oct 2024</div>
-          <div class="act-title">Cyber Security Club, KSU</div>
-          <div class="act-desc">Member of the Technology Committee in Riyadh, supporting cybersecurity awareness programs and technology-focused initiatives at King Saud University.</div>
-        </div>
-        <div class="act-card">
-          <div class="act-type">🏆 Award</div>
-          <div class="act-title">Jazan University Excellence Award — 1st Place</div>
-          <div class="act-desc">Received the Jazan University Award for Excellence, ranking 1st in the academic year 2022–2023 within the Information Technology Department.</div>
-        </div>
-        <div class="act-card">
-          <div class="act-type">Volunteer · Oct 2025 · 100 Hours</div>
-          <div class="act-title">University Volunteer Club, Abha</div>
-          <div class="act-desc">Completed 100 volunteer hours contributing to community service and outreach programs in Abha over three weeks in October 2025.</div>
-        </div>
-        <div class="act-card">
-          <div class="act-type">Volunteer · Sep 2025 · 40 Hours</div>
-          <div class="act-title">Voluntary Work Association, Hail</div>
-          <div class="act-desc">Participated in community service with the Voluntary Work and Community Service Association, contributing 40 hours in Hail.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+class Node {
+  constructor(){
+    this.x = Math.random()*W;
+    this.y = Math.random()*H;
+    this.vx = (Math.random()-.5)*.35;
+    this.vy = (Math.random()-.5)*.35;
+    this.r = Math.random()*1.8+.8;
+    this.alpha = Math.random()*.6+.2;
+  }
+  update(){
+    this.x += this.vx; this.y += this.vy;
+    if(this.x<0||this.x>W) this.vx*=-1;
+    if(this.y<0||this.y>H) this.vy*=-1;
+  }
+}
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-num">06</span>
-        <h2>Contact</h2>
-        <div class="section-line"></div>
-      </div>
+function initNodes(){
+  nodes = [];
+  const count = Math.min(Math.floor(W*H/12000), 90);
+  for(let i=0;i<count;i++) nodes.push(new Node());
+}
+initNodes();
 
-      <div class="contact-inner">
-        <h2>Let's Connect</h2>
-        <p>Open to opportunities in AI, Data Science, Cybersecurity, and IT roles.</p>
-        <div class="contact-links">
-          <a class="contact-item" href="mailto:zyly327@gmail.com">
-            <span>✉</span> zyly327@gmail.com
-          </a>
-          <a class="contact-item" href="tel:+966554217082">
-            <span>📞</span> +966 55 421 7082
-          </a>
-          <a class="contact-item" href="https://www.linkedin.com/in/yahya-majrashi" target="_blank">
-            <span>🔗</span> LinkedIn Profile
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+const colors = ['rgba(123,95,255,','rgba(0,212,255,','rgba(0,255,136,','rgba(196,181,253,'];
 
-  <footer>
-    <div class="container">
-      Yahya Majrashi · Information Technology Graduate · Saudi Arabia · 2026
-    </div>
-  </footer>
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // Draw connections
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<160){
+        const alpha=(1-dist/160)*.18;
+        const ci = (i+j)%colors.length;
+        ctx.beginPath();
+        ctx.strokeStyle = colors[ci]+alpha+')';
+        ctx.lineWidth=.6;
+        ctx.moveTo(nodes[i].x,nodes[i].y);
+        ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  // Draw nodes
+  nodes.forEach((n,i)=>{
+    const ci = i%colors.length;
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle = colors[ci]+n.alpha+')';
+    ctx.fill();
+    n.update();
+  });
+  animId = requestAnimationFrame(draw);
+}
+draw();
 
-  <script>
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'none';
-        }
-      });
-    }, { threshold: 0.1 });
+/* ── TYPEWRITER ── */
+const phrases=[
+  'building ML models',
+  'exploring deep learning',
+  'processing natural language',
+  'analyzing data patterns',
+  'training neural networks',
+  'deploying AI solutions',
+];
+let pi=0, ci=0, del=false;
+const tw = document.getElementById('typewriter');
+function type(){
+  const txt=phrases[pi];
+  tw.textContent = del ? txt.slice(0,ci--) : txt.slice(0,ci++);
+  if(!del && ci>txt.length){ del=true; setTimeout(type,1400); return; }
+  if(del && ci<0){ del=false; pi=(pi+1)%phrases.length; ci=0; setTimeout(type,400); return; }
+  setTimeout(type, del?45:80);
+}
+type();
 
-    document.querySelectorAll('.edu-card, .exp-item, .skill-group, .cert-item, .act-card').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(el);
-    });
-  </script>
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+},{ threshold:.08, rootMargin:'0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal,.focus-card,.proj-card,.sk-card,.cert-card,.act-card,.edu-card,.exp-item').forEach((el,i)=>{
+  if(!el.classList.contains('reveal')) el.classList.add('reveal');
+  el.style.transitionDelay = (i%4)*.08+'s';
+  obs.observe(el);
+});
+
+/* ── ACTIVE NAV HIGHLIGHT ── */
+const sections=[...document.querySelectorAll('section[id]')];
+const navLinks=[...document.querySelectorAll('.nav-links a')];
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) current=s.id; });
+  navLinks.forEach(a=>{
+    a.style.color = a.getAttribute('href')==='#'+current ? '#c4b5fd' : '';
+    a.style.background = a.getAttribute('href')==='#'+current ? 'rgba(123,95,255,.15)' : '';
+  });
+},{ passive:true });
+</script>
 </body>
 </html>
